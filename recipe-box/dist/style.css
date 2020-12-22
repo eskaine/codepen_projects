@@ -1,0 +1,47 @@
+body {
+  margin: 1em 0em 1em 0em;
+}
+
+a {
+  outline: 0;
+}
+
+h1 {
+  float: left;
+  margin-top: 0.6em;
+  margin-bottom: 0.5em;
+}
+
+.recipebox {
+  padding: 1em 2em 1em 2em;
+  margin-bottom: 2em;
+  border: 3px solid #2c3e50;
+  border-radius: 25px;
+  background-color: #F7F7F9;
+}
+
+.addDiv {
+  float: right;
+  margin-top: 1.5em;
+}
+
+.panel-body > h4 {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.panel > .panel-heading {
+  background-color: #18BC9C;
+  color: #FFF;
+}
+
+.divider {
+  margin: 0em 0em 1.5em 0em;
+  height: 2px;
+  width: 100%;
+  background-color: #CCCCCC;
+}
+
+.btn-warning {
+  margin-right: 5px;
+}

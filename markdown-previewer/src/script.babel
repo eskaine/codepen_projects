@@ -1,0 +1,60 @@
+var Markdown = React.createClass({
+
+            getInitialState: function() {
+                return {
+                    markedstring: 'Heading\n=======\n\n' +
+                    'Sub-heading\n-----------\n\n' +
+                    '### Another deeper heading\n\n' +
+                    'Paragraphs are separated\nby a blank line.\n\n' +
+                    'Leave 2 spaces at the end of a line to do a  \nline break\n\n' +
+                    'Text attributes *italic*, **bold**, `monospace`, ~~strikethrough~~\n\n' +
+                    'Shopping List\n' +
+                    '* Apple\n' +
+                    '* Orange\n' +
+                    '* Grape\n\n' +
+                    'Numbered List\n' +
+                    '1. Apple\n' +
+                    '2. Orange\n' +
+                    '3. Grape\n\n' +
+                    '| Table | Col 1 | Col 2 |\n' +
+                    '|-----|-----|-----|\n' +
+                    '| Row 1 | Content | Content |\n' +
+                    '| Row 2 | Content | Content |\n'
+                };
+            },
+
+            handleInput: function(event) {
+                this.setState({
+                  markedstring: event.target.value
+                });
+            },
+
+            markedText: function() {
+                var mark = marked(this.state.markedstring);
+                return {__html: mark};
+            },
+
+            render: function() {
+                return (
+                  <div>
+                    <h1 id="title">Markdown Previewer</h1>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-6">
+                                <textarea onChange={this.handleInput}>{this.state.markedstring}</textarea>
+                              </div>
+                              <div className="col-md-6">
+                                <div id="displaytext" dangerouslySetInnerHTML={this.markedText()}></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                );
+            }
+
+        });
+
+        ReactDOM.render(
+          <Markdown />,
+          document.getElementById('display')
+        );

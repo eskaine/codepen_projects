@@ -1,0 +1,48 @@
+body {
+  overflow: hidden;
+  background: -webkit-radial-gradient(#1777f0, #06001a);
+  background: -o-radial-gradient(#1777f0, #06001a);
+  background: -moz-radial-gradient(#1777f0, #06001a);
+  background: radial-gradient(#1777f0, #06001a);
+}
+
+svg {
+  margin-top: -81px;
+  margin-left: -8px;
+}
+
+.land {
+  fill: #3dd1ff;
+  stroke: #222;
+  stroke-width: 0.5px;
+}
+
+.boundary {
+  fill: none;
+  stroke: #222;
+  stroke-width: 0.5px;
+}
+
+.meteorite {
+  fill: #222;
+  stroke: #FFF;
+  stroke-width: 1px;
+}
+
+circle:hover {
+  fill: #000;
+}
+
+.tooltip {
+  font-family: Verdana;
+  font-size: 12px;
+  width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 10px;
+  border: 2px solid #646464;
+  opacity: 0;
+  color: #000;
+  background: rgba(255, 255, 255, 0.7);
+}

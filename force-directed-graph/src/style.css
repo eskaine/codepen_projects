@@ -1,0 +1,25 @@
+body {
+  background-color: #bdc3c7;
+}
+
+svg {
+  background-color: #ecf0f1;
+}
+
+.links {
+  stroke: #666;
+  stroke-opacity: 1;
+}
+
+.tooltip {
+  font-family: Verdana;
+  font-size: 12px;
+  width: auto;
+  padding: 5px;
+  position: absolute;
+  z-index: 10;
+  border: 1px solid #646464;
+  opacity: 0;
+  color: #000;
+  background: #FFF;
+}

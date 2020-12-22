@@ -1,0 +1,67 @@
+h2, .recentCol,
+.alltimeCol, .indexCol {
+  text-align: center;
+}
+
+body {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  color: #646464;
+}
+
+h2 {
+  margin: 0;
+  padding-top: 15px;
+  height: 60px;
+  border-bottom: 0;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  color: #FFF;
+  background-color: #5CB85C;
+}
+
+table,
+thead {
+  border: 3px solid #646464;
+}
+
+th,
+tr,
+td {
+  border: 1px solid #cccccc;
+}
+
+i {
+  vertical-align: bottom;
+}
+
+img {
+  width: 42px;
+  height: 42px;
+  margin-right: 10px;
+  border-radius: 21px;
+  border: 2px solid #5CB85C;
+}
+
+.textDeco {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.recentCol,
+.alltimeCol {
+  width: 25%;
+}
+
+.indexCol {
+  width: 10%;
+}
+
+.userCol {
+  width: 40%;
+}
+
+.green {
+  color: #5CB85C;
+  font-weight: bold;
+}

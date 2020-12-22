@@ -1,0 +1,74 @@
+$green: #00FF00;
+
+%center {
+  text-align: center;
+}
+
+%s2p {
+  font-family: 'Press Start 2P', cursive;
+}
+
+body {
+  margin-top: 2em;
+  margin-bottom: 5em;
+  background-color: #000000;
+  @extend %s2p;
+  @extend %center;
+}
+
+button {
+  @extend %s2p;
+}
+
+h1 {
+  margin-bottom: 1em;
+  color: $green;
+}
+
+#panel {
+  margin: 0 auto;
+  margin-bottom: 1em;
+  width: 1440px;
+  text-align: left;
+}
+
+#view {
+  margin: 0 auto;
+  position: relative;
+  width: 1440px;
+}
+
+
+/*Canvas*/
+
+#darkness {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.modal-sm {
+  width: 400px;
+}
+
+.lose {
+  background-color: red;
+  color: #BABABA;
+}
+
+.win {
+  background-color: $green;
+  color: #000000;
+}
+
+.on {
+  background-color: $green;
+}

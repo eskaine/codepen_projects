@@ -1,0 +1,103 @@
+  var Leaderboard = React.createClass({
+
+    getInitialState: function() {
+      return {
+        recentList: [],
+        alltimeList: [],
+        recentArrow: <i className="material-icons">arrow_drop_down</i>,
+        alltimeArrow: [],
+        whichList: "recent"
+      };
+    },
+
+    componentDidMount: function() {
+
+      //Reference (http://stackoverflow.com/questions/33104747/fetching-multiple-api-requests-with-react-native)
+      fetch('https://fcctop100.herokuapp.com/api/fccusers/top/recent')
+        .then((response) => response.json())
+        .then((json) => {
+          this.setState({
+            recentList: json
+          });
+        }).then(() => {
+
+          fetch('https://fcctop100.herokuapp.com/api/fccusers/top/alltime')
+            .then((response) => response.json())
+            .then((json) => {
+              this.setState({
+                alltimeList: json
+              });
+            })
+        })
+
+    },
+
+    recentBtn: function() {
+      this.setState({
+        whichList: 'recent',
+        alltimeArrow: [],
+        recentArrow: <i className="material-icons">arrow_drop_down</i>
+      });
+    },
+
+    alltimeBtn: function() {
+      this.setState({
+        whichList: 'alltime',
+        recentArrow: [],
+        alltimeArrow: <i className="material-icons">arrow_drop_down</i>
+      });
+    },
+
+    render: function() {
+
+      var currentList;
+
+      //Switch between recent and alltime list
+      if (this.state.whichList == 'recent') {
+        currentList = this.state.recentList;
+      } else if (this.state.whichList == 'alltime') {
+        currentList = this.state.alltimeList;
+      }
+
+      //Map function to iterate over list array
+      var list = currentList.map(function(user, i) {
+        var tablerow = (
+          <tr key={'user_' + i}>
+                    <td className="indexCol">{i + 1}</td>
+                    <td className="green">{<img src={user.img}/>}{user.username}</td>
+                    <td className="recentCol">{user.recent}</td>
+                    <td className="alltimeCol">{user.alltime}</td>
+                  </tr>
+        );
+        return tablerow
+      });
+
+      return (
+        <div className="container">
+
+                    <h2>freeCodeCamp Leaderboard</h2>
+
+                    <table className="table table-striped">
+                      <thead>
+                        <tr>
+                          <th className="indexCol">#</th>
+                          <th className="userCol">Camper Name</th>
+                          <th className="recentCol textDeco" onClick={this.recentBtn}>Recent{this.state.recentArrow}</th>
+                          <th className="alltimeCol textDeco" onClick={this.alltimeBtn}>Alltime{this.state.alltimeArrow}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {list}
+                      </tbody>
+                    </table>
+
+                  </div>
+      );
+    }
+
+  });
+
+  ReactDOM.render(
+    <Leaderboard />,
+    document.getElementById('display')
+  );

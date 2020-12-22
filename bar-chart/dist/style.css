@@ -1,0 +1,63 @@
+body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+}
+
+svg {
+  margin-top: 3em;
+  border: 1px solid #000;
+  background: #f6f6f6;
+}
+
+rect {
+  fill: #007cc3;
+}
+
+rect:hover {
+  fill: #009fe6;
+}
+
+.title {
+  text-anchor: middle;
+  font-size: 2em;
+  font-weight: bold;
+  fill: #007cc3;
+}
+
+.description {
+  text-align: center;
+  width: 80%;
+  font-size: 1em;
+}
+
+.tooltip {
+  padding: 5px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.7);
+  color: #717171;
+}
+
+.gdp-text {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.axis text {
+  font: 18px sans-serif;
+}

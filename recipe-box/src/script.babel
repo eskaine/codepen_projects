@@ -1,0 +1,314 @@
+//Retrieve recipe list data from localstorage
+function getRecipeList() {
+  var recipeList = JSON.parse(localStorage.getItem("recipelist"));
+  return recipeList;
+}
+
+//Update modal form default values according to add(new) or edit button
+function modalUpdate(index, isedit) {
+  var recipe = getRecipeList();
+  localStorage.setItem("isEdit", isedit);
+  recipe = recipe[index];
+  var modal = $('#recipeform')
+
+  //Edit default values
+  if (isedit == true) {
+    modal.find('.modal-header h4').html('Edit Recipe')
+    modal.find('.modal-body input').val(recipe.name)
+    modal.find('.modal-body textarea').val(recipe.ingredients)
+    modal.find('.modal-footer #update').html('Update')
+
+    //Add default values
+  } else {
+    modal.find('.modal-header h4').html('Add Recipe')
+    modal.find('.modal-body input').val('')
+    modal.find('.modal-body textarea').val('')
+    modal.find('.modal-footer #update').html('Add')
+  }
+}
+
+var RecipeForm = React.createClass({
+
+  propTypes: {
+    onAddRecipe: React.PropTypes.func.isRequired,
+    onEditRecipe: React.PropTypes.func.isRequired
+  },
+
+  //Reset form value to empty
+  resetForm: function() {
+    $('#addRecipeForm').on('hidden.bs.modal', function(e) {
+      $('input').val('');
+      $('textarea').val('');
+    });
+  },
+
+  //Change onclick function on button in modal accordingly
+  updateList: function() {
+    var name = $('input').val();
+    var ingredients = $('textarea').val();
+    var value = $('#update').html();
+    var recipe = getRecipeList();
+
+    //Give empty Recipe name a default value
+    if (name == '') {
+      name = 'Untitled';
+    }
+
+    //Convert empty ingredients string to empty array
+    if (ingredients == '') {
+      ingredients = [' '];
+
+      //Convert ingredients string to array
+    } else {
+      ingredients = ingredients.split(',');
+    }
+
+    //Callback to Edit Recipe
+    if (value == "Update") {
+      this.props.onEditRecipe({
+        name: name,
+        ingredients: ingredients
+      });
+      this.resetForm();
+
+      //Callback to Add Recipe
+    } else {
+      this.props.onAddRecipe({
+        name: name,
+        ingredients: ingredients
+      });
+      this.resetForm();
+    }
+  },
+
+  render: function() {
+    return (
+      <div className="modal fade" id="recipeform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 className="modal-title" id="myModalLabel"></h4>
+                      </div>
+                      <div className="modal-body">
+                          <form>
+                              <div className="form-group">
+                                  <label>Recipe</label>
+                                  <input type="text" className="form-control" placeholder="Recipe Name" />
+                              </div>
+                              <div className="form-group">
+                                  <label>Ingredients</label>
+                                  <textarea id="ingredients" className="form-control" rows="3"  placeholder="Enter Ingredients,Seperated,By Commas"></textarea>
+                              </div>
+                          </form>
+                      </div>
+                      <div className="modal-footer">
+                          <a type="button" id="update" className="btn btn-info" data-dismiss="modal" onClick={this.updateList}></a>
+                          <a type="button" className="btn btn-default" data-dismiss="modal" onClick={this.resetState}>Close</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+    );
+  }
+});
+
+var IngredientsContainer = React.createClass({
+
+  propTypes: {
+    ingredientslist: React.PropTypes.array.isRequired
+  },
+
+  render: function() {
+    //List out each ingredient in a row
+    var rows = [];
+    this.props.ingredientslist.forEach((listitem) => {
+      if (listitem !== '') {
+        rows.push(<li className="list-group-item">{listitem}</li>);
+      }
+    });
+
+    return (<div>{rows}</div>);
+  }
+});
+
+var RecipeContainer = React.createClass({
+
+  propTypes: {
+    index: React.PropTypes.number.isRequired,
+    recipe: React.PropTypes.array.isRequired,
+    onEditIndex: React.PropTypes.func.isRequired,
+    onDelete: React.PropTypes.func.isRequired
+  },
+
+  handleDelete: function() {
+    this.props.onDelete(this.props.index);
+  },
+
+  handleModal: function() {
+    modalUpdate(this.props.index, true);
+
+    //Callback to set index of current edited recipe
+    this.props.onEditIndex(this.props.index);
+  },
+
+  render: function() {
+
+    var recipeItem = (
+      <div id={"recipe" + this.props.index} key={this.props.index} className="panel panel-default">
+            <div className="panel-heading" role="tab" id={"recipeheading_" + this.props.index}>
+                <h4 className="panel-title">
+                  <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href={"#recipe_" + this.props.index}
+                  aria-expanded="false" aria-controls={"recipe_" + this.props.index}>
+                    {this.props.recipe.name}
+                  </a>
+                </h4>
+            </div>
+            <div id={"recipe_" + this.props.index} className="panel-collapse collapse" role="tabpanel" aria-labelledby={"recipeheading_" + this.props.index}>
+                <div className="panel-body">
+                    <h4>Ingredients</h4>
+                    <div className="divider"></div>
+                    <ul className="list-group">
+                      <IngredientsContainer ingredientslist={this.props.recipe.ingredients} />
+                    </ul>
+                    <a type="button" className="btn btn-warning" data-toggle="modal" data-target="#recipeform"
+                     onClick={this.handleModal}>Edit</a>
+                    <a type="button" className="btn btn-danger" onClick={this.handleDelete}>Delete</a>
+                </div>
+            </div>
+
+        </div>
+    );
+    return recipeItem;
+  }
+});
+
+var AddRecipe = React.createClass({
+
+  handleModal: function() {
+    modalUpdate(null, false);
+  },
+
+  render: function() {
+    return (
+      <div className="addDiv">
+            <a type="button" className="btn btn-info" data-toggle="modal" data-target="#recipeform" onClick={this.handleModal}>Add</a>
+          </div>
+    );
+  }
+});
+
+var RecipeListContainer = React.createClass({
+
+  propTypes: {
+    recipeList: React.PropTypes.array.isRequired,
+    onEditIndex: React.PropTypes.func.isRequired,
+    onDelete: React.PropTypes.func.isRequired
+  },
+
+  render: function() {
+    var ondelete = this.props.onDelete;
+    var oneditindex = this.props.onEditIndex;
+    var rows = this.props.recipeList.map(function(listitem, i) {
+
+      return (<RecipeContainer
+            index={i}
+            recipe = {listitem}
+            onEditIndex={oneditindex}
+            onDelete={ondelete}
+            />);
+    });
+
+    return (<div>{rows}</div>);
+  }
+});
+
+var RecipeListApp = React.createClass({
+
+  getInitialState: function() {
+    return {
+      initialList: [{
+        name: "Chicken Pie",
+        ingredients: ["Crushed Garlic", "Crusty Bread", "Butter"]
+      }, {
+        name: "Beef Stew",
+        ingredients: ["Cubed Beef", "Worcestershire Sauce", "Sliced Carrots"]
+      }],
+      currentList: [],
+      currentIndex: 0
+    }
+  },
+
+  //To set default index for use by handleEditRecipe function
+  handleIndex: function(index) {
+    this.setState({
+      currentIndex: index
+    });
+  },
+
+  //To add new recipe to the current list, update localstorage
+  handleAddRecipe: function(newRecipe) {
+    var recipeList = getRecipeList();
+    recipeList.push(newRecipe);
+    localStorage.setItem("recipelist", JSON.stringify(recipeList));
+    this.setState({
+      currentList: recipeList
+    });
+  },
+
+  //To edit current recipe, update localstorage
+  handleEditRecipe: function(updatedRecipe) {
+    var recipeList = getRecipeList();
+    recipeList[this.state.currentIndex] = updatedRecipe;
+    localStorage.setItem("recipelist", JSON.stringify(recipeList));
+    this.setState({
+      currentList: recipeList
+    });
+  },
+
+  //To delete recipe from the list
+  handleDeleteRecipe: function(index) {
+    var recipeList = getRecipeList();
+    recipeList.splice(index, 1);
+    localStorage.setItem("recipelist", JSON.stringify(recipeList));
+    this.setState({
+      currentList: recipeList
+    });
+  },
+
+  render: function() {
+    var myList = [];
+    if (getRecipeList() === null) {
+      myList = this.state.initialList;
+      localStorage.setItem("recipelist", JSON.stringify(myList));
+    } else {
+      myList = getRecipeList();
+    }
+
+    return (
+      <div>
+            <div className="container recipebox">
+              <div className="row">
+                <div className="col-sm-12">
+                  <h1>Recipe Box</h1><AddRecipe />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-12">
+                  <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <RecipeListContainer recipeList={myList} onEditIndex={this.handleIndex} onDelete={this.handleDeleteRecipe}  />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <RecipeForm onAddRecipe={this.handleAddRecipe} onEditRecipe={this.handleEditRecipe} />
+          </div>
+    );
+  }
+
+});
+
+ReactDOM.render(
+  <RecipeListApp />,
+  document.getElementById('display')
+);

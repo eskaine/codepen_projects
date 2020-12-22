@@ -1,0 +1,55 @@
+body {
+  display: flex;
+  justify-content: center;
+  font-family: "Verdana", sans-serif;
+}
+
+svg {
+  margin-top: 3em;
+  box-shadow: 0 0 10px #000;
+}
+
+.text_title {
+  font-size: 30px;
+  font-weight: bold;
+  fill: #646464;
+}
+
+.text_year {
+  font-size: 22px;
+  font-weight: bold;
+  fill: #646464;
+}
+
+.text_desc,
+.axisX text,
+.axisY text {
+  font-size: 12px;
+}
+
+.text_legend {
+  font-size: 10px;
+}
+
+.tooltip {
+  width: 150px;
+  padding: 10px;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 10px;
+  text-align: center;
+  border: 2px solid #646464;
+  opacity: 0;
+  color: #000;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.text_tipdate {
+  font-weight: bold;
+  color: #646464;
+}
+
+.text_tiptemp {
+  font-size: 14px;
+  color: #646464;
+}

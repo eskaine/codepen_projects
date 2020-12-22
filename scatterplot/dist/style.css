@@ -1,0 +1,70 @@
+body {
+  background-color: #f0f0f0;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+svg {
+  margin-top: 5em;
+  border: 1px solid #000;
+  background: #e8eaee;
+  fill: #49565b;
+}
+
+circle:hover {
+  stroke: #34495e;
+  stroke-width: 2px;
+}
+
+.title {
+  font-size: 32px;
+}
+
+.subtitle {
+  font-size: 24px;
+}
+
+.dope {
+  fill: #ef3f6d;
+}
+
+.nodope {
+  fill: #0e62b8;
+}
+
+.textsize {
+  font-size: 18px;
+}
+
+.name {
+  font-size: 13px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #49565b;
+  stroke-width: 3px;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 18px sans-serif;
+}
+
+.tooltip {
+  width: 220px;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  background: #34495e;
+  color: #FFF;
+  text-align: center;
+}
+
+.tiptime {
+  margin-bottom: 1em;
+}
